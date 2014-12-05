@@ -17,8 +17,20 @@
  int initial_delay = 2000;
  int x = 1; int y = 2;
  
- int testValues[] = {45,60,75,90,105,120,135};
+ long x_false; long y_false;
  
+ int testValues[] = {60,75,90,105,120};
+ 
+ boolean servos_test_feedback = true;
+ 
+ int testAngles[11] = {60,66,72,78,84,90,96,102,108,114,120};  // Define test angle array.
+ int n = sizeof(testAngles) / sizeof(int);  // n = # of angles in testAngle[] array.
+
+ struct AnglePair{
+   int angleX;
+   int angleY; };
+ AnglePair randomPositionsArray[121];
+ int randomArray[121]; 
  /************************************/ 
 
  void setup() {
@@ -39,11 +51,11 @@
   Serial.println("Beginning test program..."); Serial.println("");
   delay(initial_delay);
   
-  
  }
  
  void loop() {
    
-  servo1_test();
+  servos_test();
+  //build_randomArray();
   
  }
