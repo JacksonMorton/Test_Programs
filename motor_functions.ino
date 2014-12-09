@@ -2,6 +2,7 @@
   
   void toggleSwitch(int motor) {
     
+  if (motor == x || motor == y){
     for(i=0; i < (sizeof(testValues)/sizeof(int)); i++) {
       //Serial.print("lastMode: "); Serial.print(lastMode); Serial.print("   manual: "); Serial.print(manual);
       manual = digitalRead(mode_switch);
@@ -12,24 +13,54 @@
         if (motor == x) {
           servo_x(u);
           servo_y(90); 
-          z = x;}
+          w = x;}
         else if (motor == y) {
           servo_x(90);
           servo_y(u);
-          z = y; }
+          w = y; }
         manual = digitalRead(mode_switch);
        
         if (feedback_on){
           delay(1500);
           feedback();
         }
-
       } 
-
       u = testValues[i];
       lastMode = manual;
     }
   }
+  else {
+    servo_x(90); 
+    servo_y(90);
+    //stepsArray[6] = 133;
+    for(int h=0; h < (sizeof(stepperValues)/sizeof(int)); h++) {
+      manual = digitalRead(mode_switch);
+      Serial.print("manual "); Serial.println(manual);
+      
+      while (lastMode == manual) {
+        if (moveStepper) {
+          Serial.print("*** stepsArray[h]: "); Serial.println(stepsArray[h]);
+          Serial.print("h = "); Serial.println(h);
+          Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
+          
+          //Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
+          //if (h=6) {stepper_position(133);}
+          //else { 
+            stepper_position(stepsArray[h]); 
+          //  }
+          Serial.print("netSteps:  "); Serial.println(netSteps); Serial.println("");
+          moveStepper = false;  
+        }
+        manual = digitalRead(mode_switch); 
+      }
+      
+    lastMode = manual;
+    moveStepper = true;
+    }
+    
+  }
+  
+}
   
   
   /**************************************************************************/
@@ -39,10 +70,10 @@
     feedback1 = analogRead(feedbackPin1); feedback2 = analogRead(feedbackPin2);
     feedback1_map = map(feedback1, 259, 356, 45, 135); feedback2_map = map(feedback2, 245, 340, 45, 135);
     Serial.println("");
-    if (z == x) {
+    if (w == x) {
     Serial.print("servo1 feedback: "); Serial.print(feedback1); Serial.println(" (This number is between 263 and 360.)");
     Serial.print("servo1 mapped feedback: "); Serial.print(feedback1_map); Serial.println(" degrees"); }
-    else if (z == y) {
+    else if (w == y) {
     Serial.print("servo2 feedback: "); Serial.print(feedback2); Serial.println(" (This number is between 252 and 342.)");
     Serial.print("servo2 mapped feedback: "); Serial.print(feedback2_map); Serial.println(" degrees"); }
     Serial.println(""); Serial.println(""); 
@@ -67,17 +98,26 @@
  // Serial.print("servo2 mapped feedback: "); Serial.print(feedback2_map); Serial.println(" degrees"); 
   Serial.println(""); Serial.println(""); 
  
+  if(netSteps > 0) {digitalWrite(dir,LOW); outputDir = false;}
+    else {digitalWrite(dir,HIGH); outputDir = true;}
+  for(i=0; i < abs(netSteps); i++){
+    digitalWrite(steps,LOW);
+    digitalWrite(steps,HIGH);
+    delayMicroseconds(n);
+  } 
+  sum_steps();
   delay(3000);
- 
   }
   
   
   /**************************************************************************/
   
   
+  //void servo_x(long x_val) {
   void servo_x(long x_val) {
     x_false = (x_val - 45.382) / 0.4987;
-    servo1.write(x_false);
+    servo1.write(x_false);  // This line of code causes an error in toggleSwitch() 
+                            // when the stepper motor is tested.
   }
   
   void servo_y(long y_val) {
