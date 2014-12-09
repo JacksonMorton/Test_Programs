@@ -1,4 +1,6 @@
+
  #include <Servo.h>
+ #include <MemoryFree.h>
  
  Servo servo1; 
  Servo servo2;
@@ -21,16 +23,20 @@
  
  int testValues[] = {60,75,90,105,120};
  
- boolean servos_test_feedback = true;
+ boolean servos_test_feedback = false;
  
- int testAngles[11] = {60,66,72,78,84,90,96,102,108,114,120};  // Define test angle array.
+ //int testAngles[11] = {60,66,72,78,84,90,96,102,108,114,120};  // Define test angle array.
+ int testAngles[10] = {60,66,72,78,84,90,96,102,111,120};
  int n = sizeof(testAngles) / sizeof(int);  // n = # of angles in testAngle[] array.
 
  struct AnglePair{
    int angleX;
    int angleY; };
- AnglePair randomPositionsArray[121];
- int randomArray[121]; 
+ //AnglePair randomPositionsArray2[25];
+ AnglePair randomPositionsArray[100];
+ int randomArray[100]; 
+ int val1; int val2;
+ 
  /************************************/ 
 
  void setup() {
@@ -56,6 +62,6 @@
  void loop() {
    
   servos_test();
-  //build_randomArray();
+  //build_positionsArray();
   
  }

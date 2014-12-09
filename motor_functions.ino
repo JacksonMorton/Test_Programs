@@ -31,7 +31,9 @@
     }
   }
   
-
+  
+  /**************************************************************************/
+  
   
   void feedback() {
     feedback1 = analogRead(feedbackPin1); feedback2 = analogRead(feedbackPin2);
@@ -47,7 +49,9 @@
     feedback_on = false;
   }
   
+  
   /**************************************************************************/
+  
   
   void center() {
  
@@ -67,7 +71,9 @@
  
   }
   
+  
   /**************************************************************************/
+  
   
   void servo_x(long x_val) {
     x_false = (x_val - 45.382) / 0.4987;
@@ -79,13 +85,17 @@
     servo2.write(y_false); 
   }
   
+  
   /**************************************************************************/
+
 
  void build_positionsArray() { //Creat the complete, ordered array of every test angle.
 
-   // struct AnglePair{
-   // int angleX;
-   // int angleY; };
+   //Serial.print("freeMemory: "); Serial.println(freeMemory());
+
+   //struct AnglePair{
+   //int angleX;
+   //int angleY; };
 
    if (servos_test_feedback) {Serial.print("n = "); Serial.println(n); } 
    
@@ -95,14 +105,14 @@
    
    for (int a=0; a<n; a++) {
      testPair.angleX = testAngles[a];
-     if (servos_test_feedback) {Serial.print("The value of a: "); Serial.println(a);}
      
      for (int b=0; b<n; b++) {
        int positionNumber = (a*n) + b;  //  positionNumber increases by 1 from 1 to n^2 for every iteration of the double for loop.
        testPair.angleY = testAngles[b];
-       //Serial.print("a: "); Serial.println(a);
-       //Serial.print("b: "); Serial.println(b);
-       //Serial.print("positionNumber: "); Serial.println(positionNumber);
+       if (servos_test_feedback) {
+       Serial.print("a: "); Serial.println(a);
+       Serial.print("b: "); Serial.println(b);
+       Serial.print("positionNumber: "); Serial.println(positionNumber); }
 
        positionsArray[positionNumber] = testPair;  // Write the current testPair to the current positionsArray[] element.
 
@@ -113,13 +123,14 @@
      }
    }
   Serial.println("");   
-  //delay(1000); 
+  
+   delay(1000);
 
   /*----------------------------------------------------------------------------*/
+   //Serial.print("freeMemory: "); Serial.println(freeMemory());
 
- //void build_randomArray() 
    int new_val = random(1,121);
-   // int randomArray[n*n]; 
+   //int randomArray[n*n]; 
    if (servos_test_feedback) {Serial.println("randomArray[] Values:");}
    
    for (int i=0; i<n; i++) {
@@ -140,11 +151,11 @@
      } 
    }
    
-   //delay(1000);
+   delay(1000);
  
   /*----------------------------------------------------------------------------*/
   
-  // AnglePair randomPositionsArray[n*n];
+  //AnglePair randomPositionsArray[n*n];
   if (servos_test_feedback) {
     Serial.println(""); 
     Serial.println("randomPositinsArray[] Values:");}
@@ -154,5 +165,43 @@
     if (servos_test_feedback) {
       Serial.print(randomPositionsArray[i].angleX); Serial.print(", "); Serial.println(randomPositionsArray[i].angleY);}
   }
-  
+ 
+ 
+// 
+// 
+//  Serial.println(""); Serial.println(""); Serial.println("");
+//  //Serial.print("freeMemory: "); Serial.println(freeMemory());
+//  delay(4000);
+//  Serial.println("angleX, angleY");
+//  Serial.println("feedbackX, feedbackY");
+//  Serial.println(""); Serial.println(""); Serial.println("");
+//  Serial.print("freeMemory: "); Serial.println(freeMemory());
+//  
+//  for(i=0; i<(n*n); i++) {
+//    
+//    //servo_x(randomPositionsArray[i].angleX);
+//    //servo_y(randomPositionsArray[i].angleY);
+//
+//   Serial.print("freeMemory: "); Serial.println(freeMemory()); 
+//    feedback1 = analogRead(feedbackPin1); 
+//    feedback2 = analogRead(feedbackPin2);
+//    
+//    // These Serial.print instructions should be used to most clearly output data to the Serial.monitor.
+//         // Serial.print(randomPositionsArray[i].angleX); 
+//           
+//        //  if (randomPositionsArray[i].angleX < 100) {Serial.print(" , "); }
+//        //  else {Serial.print(", ");}
+//          
+//         // Serial.println(randomPositionsArray[i].angleY);
+//          
+//         // Serial.print(feedback1);  Serial.print(", "); Serial.println(feedback2); Serial.println("");
+//          
+//    // These Serial.print instrucitons should be used to transfer data to Excel for analysis.
+//    //Serial.print((randomArray[i]+1)); 
+//    //Serial.print(","); 
+//    //Serial.print(feedback1); 
+//    //Serial.print(","); 
+//    //Serial.println(feedback2);
+//  }
+//  
  }

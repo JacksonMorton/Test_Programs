@@ -2,20 +2,25 @@
 
  void servos_test() {
   
-   servo_x(90); servo_y(90);
+  servo_x(90); servo_y(90);
    
   build_positionsArray();
   
   Serial.println(""); Serial.println(""); Serial.println("");
-  //delay(4000);
+  delay(2000);
   Serial.println("angleX, angleY");
   Serial.println("feedbackX, feedbackY");
   Serial.println(""); Serial.println(""); Serial.println("");
   
   for(i=0; i<n*n; i++) {
+    
     servo_x(randomPositionsArray[i].angleX);
     servo_y(randomPositionsArray[i].angleY);
+    
     delay(2000);
+    //int time = millis();
+    //while(millis() <+ time + 2000) {Serial.println("Waiting...");};
+    
     feedback1 = analogRead(feedbackPin1); 
     feedback2 = analogRead(feedbackPin2);
     
@@ -36,5 +41,7 @@
     Serial.print(","); 
     Serial.println(feedback2);
   }
+  
+  delay(5000);
   
  }
