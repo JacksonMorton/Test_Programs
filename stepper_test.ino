@@ -10,7 +10,7 @@
 
  int angles_to_steps() {
    servo_x(90); servo_y(90);
-   long totalSteps = 3200;  // The number of steps in one full revolution of the stepper motor.
+   long totalSteps = 7280;  // The number of steps in one full revolution of the stepper motor.
    for (int j=0; j < (sizeof(stepperValues)/sizeof(int)); j++) {
      stepsArray[j] = stepperValues[j] * totalSteps / 360;
      Serial.print("stepsArray["); Serial.print(j); Serial.print("]:  "); Serial.println(stepsArray[j]);

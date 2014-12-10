@@ -32,23 +32,20 @@
   else {
     servo_x(90); 
     servo_y(90);
-    //stepsArray[6] = 133;
+    stepsArray[6] = 133;
     for(int h=0; h < (sizeof(stepperValues)/sizeof(int)); h++) {
       manual = digitalRead(mode_switch);
-      Serial.print("manual "); Serial.println(manual);
+      //Serial.print("manual "); Serial.println(manual);
       
       while (lastMode == manual) {
         if (moveStepper) {
-          Serial.print("*** stepsArray[h]: "); Serial.println(stepsArray[h]);
-          Serial.print("h = "); Serial.println(h);
-          Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
+          Serial.print("*** stepsArray["); Serial.print(h); Serial.print("] = ");Serial.println(stepsArray[h]);
+          //Serial.print("h = "); Serial.println(h);
+          //Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
           
           //Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
-          //if (h=6) {stepper_position(133);}
-          //else { 
             stepper_position(stepsArray[h]); 
-          //  }
-          Serial.print("netSteps:  "); Serial.println(netSteps); Serial.println("");
+          //Serial.print("netSteps:  "); Serial.println(netSteps); Serial.println("");
           moveStepper = false;  
         }
         manual = digitalRead(mode_switch); 
