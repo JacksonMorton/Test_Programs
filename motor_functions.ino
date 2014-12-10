@@ -39,7 +39,7 @@
       
       while (lastMode == manual) {
         if (moveStepper) {
-          Serial.print("*** stepsArray["); Serial.print(h); Serial.print("] = ");Serial.println(stepsArray[h]);
+          Serial.print("stepsArray["); Serial.print(h); Serial.print("] = ");Serial.println(stepsArray[h]);
           //Serial.print("h = "); Serial.println(h);
           //Serial.print("stepsArray[6]: "); Serial.println(stepsArray[6]);
           
